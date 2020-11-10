@@ -1,32 +1,82 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <Header></Header>
+    <Tab></Tab>
+    <keep-alive exclude="songDetail">
+      <router-view></router-view>
+    </keep-alive>
+    <player></player>
   </div>
 </template>
-
+<script>
+import player from "./components/player/player";
+import Tab from "./components/tab/tab";
+import Header from "./components/header/header";
+export default {
+  name: "app",
+  components: { Tab, Header, player },
+  props: {},
+  data() {
+    return { transitionName: "" };
+  },
+  watch: {
+    //使用watch 监听$router的变化
+    /*  $route(to, from) {
+      //如果to索引大于from索引,判断为前进状态,反之则为后退状态
+      if (to.meta.index > from.meta.index) {
+        //设置动画名称
+        this.transitionName = "slide-left";
+      } else {
+        this.transitionName = "slide-right";
+      }
+    }, */
+  },
+  computed: {},
+  methods: {},
+  created() {},
+  mounted() {},
+};
+</script>
 <style lang="less">
+@themeColor: #13c077;
+/* .slide-right-enter-active,
+.slide-right-leave-active,
+.slide-left-enter-active,
+.slide-left-leave-active {
+  will-change: transform;
+  transition: all 500ms;
+  position: absolute;
+}
+.slide-right-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+.slide-right-leave-active {
+  opacity: 0;
+  transform: translateX(100%);
+}
+.slide-left-enter {
+  opacity: 0;
+  transform: translateX(100%);
+}
+.slide-left-leave-active {
+  opacity: 0;
+  transform: translateX(-100%);
+} */
+
 #app {
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgb(238, 240, 240);
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
 }
 </style>
