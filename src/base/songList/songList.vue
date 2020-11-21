@@ -46,7 +46,7 @@ export default {
 <style lang="less" scoped>
 .songList {
   overflow-y: scroll;
-  margin-top: 300px;
+
   text-align: left;
 }
 </style>

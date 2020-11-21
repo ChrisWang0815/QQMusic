@@ -6,6 +6,7 @@ import Rank from '../components/rank/rank.vue'
 import Search from '../components/search/search.vue'
 import Recommend from '../components/recommend/recommend.vue'
 import singerDetail from '../components/singer/singerDetail.vue'
+import disc from '../components/disc/disc.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -18,7 +19,12 @@ const routes = [
     path: '/recommend',
     name: 'recommend ',
     component: Recommend,
-    meta: { index: 0 }
+    meta: { index: 0 },
+    children: [{
+      path: ':id',
+      name: 'disc',
+      component: disc,
+    }]
   },
   {
     path: '/singer',

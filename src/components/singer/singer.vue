@@ -148,7 +148,7 @@ export default {
     onShortTouchMove(e) {
       this.touch.y2 = e.touches[0].pageY;
       this.$refs.tips.style.top = e.touches[0].pageY + "px";
-      let delta = ((this.touch.y2 - this.touch.y1) / shortHeight) | 0;
+      let delta = (this.touch.y2 - this.touch.y1) / shortHeight || 0;
       let anchorIndex = parseInt(this.touch.index) + delta;
 
       this.isActive = anchorIndex;

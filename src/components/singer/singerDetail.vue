@@ -1,39 +1,41 @@
 <template>
-  <div class="singDetail" ref="singDetail" @scroll="scroll">
-    <van-sticky>
-      <van-nav-bar
-        :title="singerDetail.name"
-        left-text="返回"
-        left-arrow
-        @click-left="$router.back()"
-    /></van-sticky>
-    <div class="singerImg">
-      <img
-        ref="bgImage"
-        @click="show = true"
-        class="singerImg"
-        :src="$store.state.SingerDetail.pic"
-        alt=""
-      />
+  <transition name="fade">
+    <div class="singDetail" ref="singDetail" @scroll="scroll">
+      <van-sticky>
+        <van-nav-bar
+          :title="singerDetail.name"
+          left-text="返回"
+          left-arrow
+          @click-left="$router.back()"
+      /></van-sticky>
+      <div class="singerImg">
+        <img
+          ref="bgImage"
+          @click="show = true"
+          class="singerImg"
+          :src="$store.state.SingerDetail.pic"
+          alt=""
+        />
+      </div>
+      <!-- 歌曲列表 -->
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >
+        <SongList style="margin-top: 300px" :songs="songs"></SongList>
+      </van-list>
+      <!-- 图片预览 -->
+      <van-image-preview v-model="show" :images="images">
+        <template v-slot:index>{{ singerDetail.name }}</template>
+      </van-image-preview>
+      <!-- 加载 -->
+      <div style="margin-top: 50px" v-show="songs.length == 0">
+        <loading></loading>
+      </div>
     </div>
-    <!-- 歌曲列表 -->
-    <van-list
-      v-model="loading"
-      :finished="finished"
-      finished-text="没有更多了"
-      @load="onLoad"
-    >
-      <SongList :songs="songs"></SongList>
-    </van-list>
-    <!-- 图片预览 -->
-    <van-image-preview v-model="show" :images="images">
-      <template v-slot:index>{{ singerDetail.name }}</template>
-    </van-image-preview>
-    <!-- 加载 -->
-    <div style="margin-top: 50px" v-show="songs.length == 0">
-      <loading></loading>
-    </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -129,6 +131,14 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.1s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateX(100vw);
+}
 .singDetail {
   overflow-y: scroll;
   height: 100vh;

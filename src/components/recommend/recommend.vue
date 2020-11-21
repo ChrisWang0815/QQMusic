@@ -11,13 +11,18 @@
     <div class="rec">热门歌单推荐</div>
 
     <div class="discList">
-      <div class="discItem" v-for="(item, index) in discList" :key="index">
+      <div
+        class="discItem"
+        v-for="(item, index) in discList"
+        @click="setItem(item)"
+        :key="index"
+      >
         <div class="discImg">
           <img v-lazy="item.imgurl" alt="" />
         </div>
         <div class="discInfo">
-          <div class="discName">{{ item.creator.name }}</div>
-          <div class="dissname">{{ item.dissname }}</div>
+          <div class="discName">{{ item.dissname }}</div>
+          <div class="dissname">{{ item.creator.name }}</div>
         </div>
       </div>
     </div>
@@ -25,6 +30,7 @@
     <div class="loading" v-show="discList.length == 0">
       <loading></loading>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -49,7 +55,14 @@ export default {
   },
   watch: {},
   computed: {},
-  methods: {},
+  methods: {
+    setItem(e) {
+      this.$router.push({
+        path: `recommend/${e.dissid}`,
+      });
+      this.$store.commit("getDiscDetail", e);
+    },
+  },
   async created() {
     let recommend = await getRecommend();
     let discList = await getDiscList();
@@ -103,7 +116,7 @@ export default {
       flex-direction: column;
       .discName {
         font-family: "微软雅黑";
-        font-weight: bold;
+        font-weight: 700;
         height: 13vw;
         padding-top: 2vw;
         white-space: nowrap;
