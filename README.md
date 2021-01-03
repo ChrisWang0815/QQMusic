@@ -1,24 +1,7 @@
 # qqmusic
 
-## Project setup
-```
-npm install
-```
+## 
+在该目录下npm run serve运行项目，在qqmusicserve中node ./bin/www启动服务器
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
+### 
 See [Configuration Reference](https://cli.vuejs.org/config/).
