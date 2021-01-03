@@ -211,12 +211,12 @@ export default {
       currentLineNum: 0,
       active: 0,
       songList: [
-        "http://music.xf1433.com/up/view.php/91398d9fe924dd2effa0a5f8708a7a72.mp3",
-        "http://music.xf1433.com/up/view.php/166bf988eb239f4aad0f843425af5c28.mp3",
-        "http://music.xf1433.com/up/view.php/10e5f0c2971efd75fedc4ccf3468d679.mp3",
+        "http://antiserver.kuwo.cn/anti.s?useless=/resource/&format=mp3&rid=MUSIC_489710&response=res&type=convert_url&",
+        "http://antiserver.kuwo.cn/anti.s?useless=/resource/&format=mp3&rid=MUSIC_98941&response=res&type=convert_url&",
+        "http://antiserver.kuwo.cn/anti.s?useless=/resource/&format=mp3&rid=MUSIC_22821541&response=res&type=convert_url&",
       ],
       song:
-        "http://music.xf1433.com/up/view.php/91398d9fe924dd2effa0a5f8708a7a72.mp3",
+        "http://antiserver.kuwo.cn/anti.s?useless=/resource/&format=mp3&rid=MUSIC_489710&response=res&type=convert_url&",
       duration: "",
       value: 50,
       time: 0,
@@ -447,7 +447,6 @@ export default {
     selectSong(index) {
       let length = this.playList.length;
       if (this.mode === this.playMode.loop) {
-        console.log(1);
         this.loop();
         return;
       }
@@ -455,7 +454,8 @@ export default {
         this.setCurrentIndex(length - 1);
         return;
       } else if (this.currentIndex == length - 1 && index == 1) {
-        this.setCurrentIndex(0);
+        this.loop();
+        return;
       }
       this.setCurrentIndex(this.currentIndex + index);
       this.song =
@@ -500,8 +500,7 @@ export default {
     },
     onChange(value) {
       const audio = this.$refs.audio;
-      audio.currentTime = (audio.duration * value) / 100;
-      this.getDuration(audio.currentTime);
+      audio.currentTime = parseInt((audio.duration * value) / 100);
     },
     oninput(value) {
       const audio = this.$refs.audio;
@@ -512,7 +511,9 @@ export default {
         return;
       }
       this.setPlaying(!this.playing);
-      this.currentLyric.togglePlay();
+      if (this.currentLyric) {
+        this.currentLyric.togglePlay();
+      }
     },
     changeTabs(v) {
       if (this.active == v) {

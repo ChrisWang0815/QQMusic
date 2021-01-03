@@ -1,23 +1,25 @@
 <template>
   <div class="singer" ref="singList" @scroll="scroll">
     <!-- 歌手列表 -->
-    <div
-      class="list"
-      v-for="(item, index) in singerData"
-      :key="index"
-      ref="listGroup"
-    >
-      <div class="cate">{{ item.title }}</div>
-      <ul>
-        <li
-          v-for="(item1, index1) in item.items"
-          :key="index1"
-          @click="singerDetail(item1)"
-        >
-          <img v-lazy="item1.pic" alt="" />
-          <span>{{ item1.name }}</span>
-        </li>
-      </ul>
+    <div ref="singerList">
+      <div
+        class="list"
+        v-for="(item, index) in singerData"
+        :key="index"
+        ref="listGroup"
+      >
+        <div class="cate">{{ item.title }}</div>
+        <ul>
+          <li
+            v-for="(item1, index1) in item.items"
+            :key="index1"
+            @click="singerDetail(item1)"
+          >
+            <img v-lazy="item1.pic" alt="" />
+            <span>{{ item1.name }}</span>
+          </li>
+        </ul>
+      </div>
     </div>
     <!-- 右侧索引 -->
     <div class="shortCut">
@@ -55,6 +57,7 @@
 import loading from "../../base/loading/loading";
 import { Lazyload } from "vant";
 import Vue from "vue";
+import { playlistMixin } from "../../common/js/mixin";
 Vue.use(Lazyload);
 // , getSingerDetail
 import { getSingerList } from "../../api/singer";
@@ -64,6 +67,7 @@ var hotListLength = 10;
 var titleHeight = 20;
 export default {
   name: "singer",
+  mixins: [playlistMixin],
   components: { loading },
   props: {},
   data() {
@@ -124,6 +128,10 @@ export default {
     },
   },
   methods: {
+    handlePlaylist(playList) {
+      let bottom = playList.length > 0 ? "45px" : "";
+      this.$refs.singerList.style.marginBottom = bottom;
+    },
     singerDetail(e) {
       this.$store.commit("getSingerDetail", e);
       this.$router.push("/singerDetail/" + e.id);

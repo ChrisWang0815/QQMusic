@@ -2,7 +2,7 @@
   <div class="m-header">
     <!-- 图片 -->
     <div class="img">
-      <a href="/"
+      <a href="recommend"
         ><img
           src="//y.gtimg.cn/mediastyle/yqq/img/logo.png?nowebp=1"
           alt="QQ音乐"
@@ -10,22 +10,27 @@
       /></a>
     </div>
     <!-- 搜索框 -->
-    <input type="text" placeholder="搜索音乐" @change="search" />
+    <div style="position: relative" @click="search">
+      <input type="text" placeholder="搜索音乐，歌手" disabled />
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: "header1",
+  data() {
+    return {};
+  },
   methods: {
-    search(e) {
-      // console.log(e.target.value);
-      this.$router.push({
-        path: "/search",
-        query: {
-          value: e.target.value,
-        },
-      });
+    search() {
+      if (this.$route.path != "/search") {
+        this.$router.push({
+          path: "/search",
+        });
+      } else {
+        return;
+      }
     },
   },
 };
@@ -33,6 +38,7 @@ export default {
 
 <style scoped lang="less">
 @themeColor: #13c077;
+
 .img,
 img {
   width: 26.667vw;

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header></Header>
-    <Tab></Tab>
+    <Tab :index="this.$route.meta.index"></Tab>
     <keep-alive exclude="songDetail">
       <router-view></router-view>
     </keep-alive>
@@ -12,25 +12,16 @@
 import player from "./components/player/player";
 import Tab from "./components/tab/tab";
 import Header from "./components/header/header";
+
 export default {
   name: "app",
+
   components: { Tab, Header, player },
   props: {},
   data() {
     return { transitionName: "" };
   },
-  watch: {
-    //使用watch 监听$router的变化
-    /*  $route(to, from) {
-      //如果to索引大于from索引,判断为前进状态,反之则为后退状态
-      if (to.meta.index > from.meta.index) {
-        //设置动画名称
-        this.transitionName = "slide-left";
-      } else {
-        this.transitionName = "slide-right";
-      }
-    }, */
-  },
+  watch: {},
   computed: {},
   methods: {},
   created() {},
@@ -38,7 +29,6 @@ export default {
 };
 </script>
 <style lang="less">
-@themeColor: #13c077;
 /* .slide-right-enter-active,
 .slide-right-leave-active,
 .slide-left-enter-active,
@@ -65,6 +55,7 @@ export default {
 } */
 
 #app {
+  @themeColor: #13c077;
   overflow: hidden;
   height: 100vh;
   width: 100vw;

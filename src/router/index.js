@@ -7,6 +7,10 @@ import Search from '../components/search/search.vue'
 import Recommend from '../components/recommend/recommend.vue'
 import singerDetail from '../components/singer/singerDetail.vue'
 import disc from '../components/disc/disc.vue'
+import topList from '../components/rank/topList.vue'
+import me from '../components/me/me.vue'
+import info from '../components/me/info.vue'
+import login from '../components/me/login.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -14,6 +18,10 @@ const routes = [
     path: "/",
     redirect: '/recommend'
 
+  },
+  {
+    path: "/login",
+    component: login
   },
   {
     path: '/recommend',
@@ -31,27 +39,41 @@ const routes = [
     name: 'Singer ',
     component: Singer,
     meta: { index: 1 },
-    children: [
 
-
-    ]
   },
   {
     path: '/singerDetail/:id',
     name: 'SingerDetail ',
     component: singerDetail,
   },
+
   {
     path: '/search',
     name: 'Search',
     component: Search,
-    meta: { index: 3 }
+
+  },
+  {
+    path: '/me',
+    name: 'me',
+    component: me,
+    meta: { index: 3 },
+    children: [{
+      path: ':id',
+      name: 'userinfo',
+      component: info,
+    }]
   },
   {
     path: '/rank',
     name: 'Rank',
     component: Rank,
-    meta: { index: 2 }
+    meta: { index: 2 },
+    children: [{
+      path: ':id',
+      name: 'topList',
+      component: topList,
+    }]
   },
 ]
 

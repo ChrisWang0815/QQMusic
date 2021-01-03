@@ -9,7 +9,7 @@
       <van-tab title="推荐" />
       <van-tab title="歌手" />
       <van-tab title="排行" />
-      <van-tab title="搜索" />
+      <van-tab title="我的" />
     </van-tabs>
   </div>
 </template>
@@ -18,11 +18,15 @@
 export default {
   name: "tab",
   components: {},
-  props: {},
+  props: ["index"],
   data() {
     return { active: 0 };
   },
-  watch: {},
+  watch: {
+    index(val) {
+      this.active = val;
+    },
+  },
   computed: {},
   methods: {
     onClick(name, title) {
@@ -41,17 +45,15 @@ export default {
         case "排行":
           this.$router.push("/rank");
           break;
-        case "搜索":
-          this.$router.push("/search");
+        case "我的":
+          this.$router.push("/me");
           break;
         default:
           break;
       }
     },
   },
-  created() {
-    this.active = this.$route.meta.index;
-  },
+  created() {},
   mounted() {},
 };
 </script>

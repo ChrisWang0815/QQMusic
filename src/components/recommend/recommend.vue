@@ -10,7 +10,7 @@
     <!-- 热门歌单推荐 -->
     <div class="rec">热门歌单推荐</div>
 
-    <div class="discList">
+    <div class="discList" ref="discList">
       <div
         class="discItem"
         v-for="(item, index) in discList"
@@ -39,12 +39,13 @@ import loading from "../../base/loading/loading";
 
 import { getRecommend, getDiscList } from "../../api/recommend";
 import { Lazyload } from "vant";
-
+import { playlistMixin } from "../../common/js/mixin";
 import Vue from "vue";
 
 Vue.use(Lazyload);
 export default {
   name: "recommend",
+  mixins: [playlistMixin],
   components: { loading },
   props: {},
   data() {
@@ -56,6 +57,10 @@ export default {
   watch: {},
   computed: {},
   methods: {
+    handlePlaylist(playList) {
+      let bottom = playList.length > 0 ? "45px" : "0";
+      this.$refs.discList.style.marginBottom = bottom;
+    },
     setItem(e) {
       this.$router.push({
         path: `recommend/${e.dissid}`,

@@ -1,6 +1,6 @@
 <template>
   <div class="songList">
-    <van-cell-group>
+    <van-cell-group v-if="rank == false">
       <van-cell
         v-for="(song, index) in songs"
         :key="index"
@@ -10,27 +10,46 @@
         :value="song.duration"
       />
     </van-cell-group>
+    <van-cell-group v-if="rank == true">
+      <van-cell
+        v-for="(song, index) in songs"
+        :key="index"
+        :title="getIndex(index, song)"
+        :label="song.singer + '.' + song.album"
+        @click="selectSong(index)"
+        :value="song.duration"
+      />
+    </van-cell-group>
   </div>
 </template>
 
 <script>
-import Vue from "vue";
-import { Toast } from "vant";
 import { mapActions } from "vuex";
-Vue.use(Toast);
+
 export default {
   name: "songList",
   components: {},
-  props: ["songs"],
+  props: {
+    songs: {
+      type: Array,
+      default: null,
+    },
+    rank: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {};
   },
   watch: {},
   computed: {},
   methods: {
-    showSong() {
-      Toast("没有接口");
+    getIndex(i, song) {
+      i = i + 1;
+      return i + " " + song.name;
     },
+
     selectSong(index) {
       this.selectPlay({
         list: this.songs,
